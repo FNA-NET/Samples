@@ -7,6 +7,8 @@
     <SupportedOSPlatformVersion>11.2</SupportedOSPlatformVersion>
     <RuntimeIdentifier>tvossimulator-x64</RuntimeIdentifier>
     <MtouchLink>SdkOnly</MtouchLink>
+    <_ExportSymbolsExplicitly>false</_ExportSymbolsExplicitly>
+    <MtouchExtraArgs>-gcc_flags "-dlsym:false"</MtouchExtraArgs>
   </PropertyGroup>
 
   <ItemGroup>

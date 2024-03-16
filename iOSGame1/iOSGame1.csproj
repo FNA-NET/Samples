@@ -6,6 +6,8 @@
     <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <_ExportSymbolsExplicitly>false</_ExportSymbolsExplicitly>
+    <MtouchExtraArgs>-gcc_flags "-dlsym:false"</MtouchExtraArgs>
   </PropertyGroup>
 
   <ItemGroup>

@@ -24,8 +24,6 @@ namespace tvOSGame1
             // Enable high DPI "Retina" support. Trust us, you'll want this.
             Environment.SetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI", "1");
 
-            SDL.SDL_SetHint("FNA3D_FORCE_DRIVER", "Vulkan");
-
             // Keep mouse and touch input separate.
             SDL.SDL_SetHint(SDL.SDL_HINT_MOUSE_TOUCH_EVENTS, "0");
             SDL.SDL_SetHint(SDL.SDL_HINT_TOUCH_MOUSE_EVENTS, "0");
