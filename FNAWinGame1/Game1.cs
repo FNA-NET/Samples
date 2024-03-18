@@ -6,6 +6,8 @@ namespace FNAWinGame1;
 
 public class Game1 : Game
 {
+	private Texture2D _texture1;
+
 	public Game1()
 	{
 		GraphicsDeviceManager gdm = new GraphicsDeviceManager(this);
@@ -76,6 +78,8 @@ public class Game1 : Game
 		TextInputEXT.StartTextInput();
 		TextInputEXT.StopTextInput();
 
+		_texture1 = Content.Load<Texture2D>("Image1");
+
 		base.LoadContent();
 	}
 
@@ -95,6 +99,16 @@ public class Game1 : Game
 	protected override void Draw(GameTime gameTime)
 	{
 		GraphicsDevice.Clear(Color.CornflowerBlue);
+
+		// Draw the texture to the corner of the screen
+		_batch.Begin(sortMode: SpriteSortMode.Deferred,
+			blendState: BlendState.AlphaBlend,
+			samplerState: SamplerState.PointClamp,
+			depthStencilState: DepthStencilState.None,
+			rasterizerState: RasterizerState.CullCounterClockwise);
+		_batch.Draw(_texture1, Vector2.Zero, Color.White);
+		_batch.End();
+
 
 		base.Draw(gameTime);
 	}
