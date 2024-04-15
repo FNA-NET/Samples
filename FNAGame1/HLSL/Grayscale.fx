@@ -24,6 +24,6 @@ technique SpriteDrawing
 {
     pass P0
     {
-        PixelShader = compile ps_2_0 MainPS();
+        PixelShader = compile ps_4_0 MainPS();
     }
 }
