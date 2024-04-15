@@ -29,6 +29,3 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/120.wav
-
-#begin Effects/Grayscale.fxb
-/copy:Effects/Grayscale.fxb
