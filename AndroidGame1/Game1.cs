@@ -8,18 +8,19 @@ namespace AndroidGame1;
 
 public class Game1 : Game
 {
+	GraphicsDeviceManager _gdm;
+
 	public Game1()
 	{
-		GraphicsDeviceManager gdm = new GraphicsDeviceManager(this);
-
-		// Typically you would load a config here...
-		gdm.IsFullScreen = true;
-		gdm.SynchronizeWithVerticalRetrace = true;
-
-		IsMouseVisible = true;
+		_gdm = new GraphicsDeviceManager(this);
 
 		// All content loaded will be in a "Content" folder
 		Content.RootDirectory = "Content";
+
+		_gdm.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+		_gdm.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+		_gdm.IsFullScreen = true;
+		_gdm.SynchronizeWithVerticalRetrace = true;
 	}
 
 	protected override void Initialize()
