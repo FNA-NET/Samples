@@ -10,6 +10,12 @@
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <MonoGamePlatform>Android</MonoGamePlatform>
+    <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AndroidPackageFormat>apk</AndroidPackageFormat> <!--Has to be apk, or app crashes on startup-->
+    <AndroidAotMode>Hybrid</AndroidAotMode>
+    <TrimMode>link</TrimMode>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\FNA\FNA-NET.csproj" />
