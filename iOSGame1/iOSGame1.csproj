@@ -1,21 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-ios</TargetFramework>
-    <SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>12.2</SupportedOSPlatformVersion>
     <OutputType>Exe</OutputType>
-    <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
-    <MtouchLink>SdkOnly</MtouchLink>
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <_ExportSymbolsExplicitly>false</_ExportSymbolsExplicitly>
-    <MtouchExtraArgs>-gcc_flags "-dlsym:false"</MtouchExtraArgs>
+    <MonoGamePlatform>iOS</MonoGamePlatform>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CollectBundleResourcesDependsOn>
+      $(CollectBundleResourcesDependsOn);
+      IncludeContent;
+    </CollectBundleResourcesDependsOn>
   </PropertyGroup>
 
   <ItemGroup>
     <BundleResource Include="GameThumbnail.png" />
-    <BundleResource Include="Content\Image1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FNA\FNA-NET.csproj" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
 </Project>
