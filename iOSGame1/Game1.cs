@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using SDL2;
+using Microsoft.Xna.Framework.Media;
 
 namespace iOSGame1;
 
@@ -12,8 +13,8 @@ public class Game1 : Game
 		GraphicsDeviceManager gdm = new GraphicsDeviceManager(this);
 
 		// Typically you would load a config here...
-		gdm.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-		gdm.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+		gdm.PreferredBackBufferWidth = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * UIKit.UIScreen.MainScreen.Scale);
+		gdm.PreferredBackBufferHeight = (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height * UIKit.UIScreen.MainScreen.Scale);
 		gdm.IsFullScreen = true;
 		gdm.SynchronizeWithVerticalRetrace = true;
 
@@ -51,6 +52,8 @@ public class Game1 : Game
 
 		// ... then load a texture from ./Content/FNATexture.png
 		_texture1 = Content.Load<Texture2D>("Image1");
+		var song = Content.Load<Song>("ambient-piano-logo");
+		Microsoft.Xna.Framework.Media.MediaPlayer.Play(song);
 
 		var w = _texture1.Width;
 		var h = _texture1.Height;
