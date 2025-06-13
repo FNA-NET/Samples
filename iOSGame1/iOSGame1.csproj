@@ -3,11 +3,11 @@
     <TargetFramework>net8.0-ios</TargetFramework>
     <SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
     <OutputType>Exe</OutputType>
-    <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <_ExportSymbolsExplicitly>false</_ExportSymbolsExplicitly>
-    <MtouchExtraArgs>-gcc_flags "-dlsym:false"</MtouchExtraArgs>
+    <OptimizePNGs>false</OptimizePNGs>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FNA\FNA-NET.csproj" />
+    <ProjectReference Include="..\FNA\FNA.NET.csproj" />
   </ItemGroup>
 </Project>

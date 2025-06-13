@@ -68,6 +68,8 @@ namespace FNAImGuiDemo
             _imGuiRenderer = new ImGuiRenderer(this);
             _imGuiRenderer.RebuildFontAtlas();
 
+            TextInputEXT.StartTextInput();
+
             base.Initialize();
         }
 
