@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FNA\FNA.NET.csproj" />
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.4" />
   </ItemGroup>
 
   <ItemGroup>
