@@ -11,7 +11,7 @@
         <string>GameThumbnail.png</string>
     </array>
     <key>CFBundleIdentifier</key>
-    <string>project.FNA-NET.iOS</string>
+    <string>org.FNA-NET.iOSGame1</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
     <key>CFBundleVersion</key>

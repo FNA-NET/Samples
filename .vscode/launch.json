@@ -5,10 +5,10 @@
             // 使用 IntelliSense 找出 C# 调试存在哪些属性
             // 将悬停用于现有属性的说明
             // 有关详细信息，请访问 https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md
-            "name": ".NET Core Launch FNAGame1 (console)",
+            "name": ".NET Core Launch FNAGame1",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildFNAGame1",
             // 如果已更改目标框架，请确保更新程序路径。
             "program": "${workspaceFolder}/FNAGame1/bin/Debug/net8.0/FNAGame1.dll",
             "args": [],
@@ -21,10 +21,10 @@
             // 使用 IntelliSense 找出 C# 调试存在哪些属性
             // 将悬停用于现有属性的说明
             // 有关详细信息，请访问 https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md
-            "name": ".NET Core Launch FNA Win Game1 (console)",
+            "name": ".NET Core Launch FNA Win Game1",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildFNAWinGame1",
             // 如果已更改目标框架，请确保更新程序路径。
             "program": "${workspaceFolder}/FNAWinGame1/bin/Debug/net8.0-windows/FNAWinGame1.dll",
             "args": [],
@@ -37,10 +37,10 @@
             // 使用 IntelliSense 找出 C# 调试存在哪些属性
             // 将悬停用于现有属性的说明
             // 有关详细信息，请访问 https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md
-            "name": ".NET Core Launch FNA ImGui Demo (console)",
+            "name": ".NET Core Launch FNA ImGui Demo",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildFNAImGuiDemo",
             // 如果已更改目标框架，请确保更新程序路径。
             "program": "${workspaceFolder}/FNAImGuiDemo/bin/Debug/net8.0/FNAImGuiDemo.dll",
             "args": [],

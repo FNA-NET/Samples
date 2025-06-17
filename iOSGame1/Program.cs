@@ -2,7 +2,7 @@
 using Foundation;
 using UIKit;
 using System.Runtime.InteropServices;
-using SDL2;
+using SDL3;
 
 namespace iOSGame1
 {
@@ -29,12 +29,12 @@ namespace iOSGame1
             SDL.SDL_SetHint(SDL.SDL_HINT_TOUCH_MOUSE_EVENTS, "0");
 
             realArgs = args;
-            SDL.SDL_UIKitRunApp(0, IntPtr.Zero, FakeMain);
+            SDL.SDL_RunApp(0, IntPtr.Zero, FakeMain, IntPtr.Zero);
         }
 
         static string[] realArgs;
 
-        [ObjCRuntime.MonoPInvokeCallback(typeof(SDL2.SDL.SDL_main_func))]
+        [ObjCRuntime.MonoPInvokeCallback(typeof(SDL.SDL_main_func))]
         static int FakeMain(int argc, IntPtr argv)
         {
             RealMain(realArgs);

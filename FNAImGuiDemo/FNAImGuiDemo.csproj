@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FNA\FNA-NET.csproj" />
+    <ProjectReference Include="..\FNA\FNA.NET.csproj" />
     <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>

@@ -2,13 +2,14 @@
   <PropertyGroup>
     <TargetFramework>net8.0-tvos</TargetFramework>
     <OutputType>Exe</OutputType>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
-    <SupportedOSPlatformVersion>11.2</SupportedOSPlatformVersion>
-    <RuntimeIdentifier>tvossimulator-x64</RuntimeIdentifier>
+    <SupportedOSPlatformVersion>13</SupportedOSPlatformVersion>
+    <RuntimeIdentifier>tvos-arm64</RuntimeIdentifier>
     <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
     <_ExportSymbolsExplicitly>false</_ExportSymbolsExplicitly>
-    <MtouchExtraArgs>-gcc_flags "-dlsym:false"</MtouchExtraArgs>
+    <MtouchExtraArgs>-gcc_flags -v</MtouchExtraArgs>
+    <OptimizePNGs>false</OptimizePNGs>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FNA\FNA-NET.csproj" />
+    <ProjectReference Include="..\FNA\FNA.NET.csproj" />
   </ItemGroup>
 </Project>

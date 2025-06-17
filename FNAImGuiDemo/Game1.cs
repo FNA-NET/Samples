@@ -51,7 +51,6 @@ namespace FNAImGuiDemo
                 GraphicsProfile = GraphicsProfile.HiDef,
                 SynchronizeWithVerticalRetrace = false
             };
-            graphics.ApplyChanges();
 
             IsMouseVisible = true;
             IsFixedTimeStep = false;
@@ -67,6 +66,8 @@ namespace FNAImGuiDemo
             _vertices = new List<VertexPositionColor>();
             _imGuiRenderer = new ImGuiRenderer(this);
             _imGuiRenderer.RebuildFontAtlas();
+
+            TextInputEXT.StartTextInput();
 
             base.Initialize();
         }
