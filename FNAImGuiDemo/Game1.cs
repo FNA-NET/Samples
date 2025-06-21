@@ -5,52 +5,28 @@ using ImGuiNET;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Num = System.Numerics;
 
 namespace FNAImGuiDemo
 {
-    public sealed class Game1 : Game
+    /// <summary>
+    /// Simple FNA + ImGui example
+    /// </summary>
+    public class Game1 : Game
     {
-        private const int DesiredFrameRate = 60;
-        private const int NumberSamples = 50;
-
+        private GraphicsDeviceManager _graphics;
         private ImGuiRenderer _imGuiRenderer;
 
-        private readonly Color _clearColor = new(0.1f, 0.1f, 0.1f);
-        private KeyboardState _currentKeyboardState;
-        private MouseState _currentMouseState;
-        private bool _isWindowFocused;
-
-        private BasicEffect _basicEffect;
-        private VertexBuffer _vertexBuffer;
-        private IList<VertexPositionColor> _vertices;
-
-        private float _fps;
-        private readonly int[] _samples = new int[NumberSamples];
-        private int _currentSample;
-        private int _ticksAggregate;
-        private float _averageFrameTime;
+        private Texture2D _xnaTexture;
+        private IntPtr _imGuiTexture;
 
         public Game1()
         {
-            Window.Title = "FNA-Bootstrap";
-            Window.AllowUserResizing = true;
-            Activated += (_, _) => { _isWindowFocused = true; };
-
-            Deactivated += (_, _) =>
-            {
-                _isWindowFocused = false;
-
-                Window.Title = "FNA-Bootstrap";
-            };
-
-            var graphics = new GraphicsDeviceManager(this)
-            {
-                PreferredBackBufferWidth = 1280,
-                PreferredBackBufferHeight = 720,
-                PreferMultiSampling = true,
-                GraphicsProfile = GraphicsProfile.HiDef,
-                SynchronizeWithVerticalRetrace = false
-            };
+            _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferMultiSampling = true;
+            _graphics.SynchronizeWithVerticalRetrace = false;
 
             IsMouseVisible = true;
             IsFixedTimeStep = false;
@@ -58,12 +34,6 @@ namespace FNAImGuiDemo
 
         protected override void Initialize()
         {
-            TargetElapsedTime = new TimeSpan(TimeSpan.TicksPerSecond / DesiredFrameRate);
-
-            _currentKeyboardState = Keyboard.GetState();
-            _currentMouseState = Mouse.GetState();
-
-            _vertices = new List<VertexPositionColor>();
             _imGuiRenderer = new ImGuiRenderer(this);
             _imGuiRenderer.RebuildFontAtlas();
 
@@ -72,173 +42,99 @@ namespace FNAImGuiDemo
             base.Initialize();
         }
 
+        protected override void LoadContent()
+        {
+            // Texture loading example
+
+            // First, load the texture as a Texture2D (can also be done using the XNA/FNA content pipeline)
+            _xnaTexture = CreateTexture(GraphicsDevice, 300, 150, pixel =>
+            {
+                var red = (pixel % 300) / 2;
+                return new Color(red, 1, 1);
+            });
+
+            // Then, bind it to an ImGui-friendly pointer, that we can use during regular ImGui.** calls (see below)
+            _imGuiTexture = _imGuiRenderer.BindTexture(_xnaTexture);
+
+            base.LoadContent();
+        }
+
         protected override void Draw(GameTime gameTime)
         {
-            if (!_isWindowFocused)
-            {
-                return;
-            }
+            GraphicsDevice.Clear(new Color(clear_color.X, clear_color.Y, clear_color.Z));
 
-            var ticks = (int)gameTime.ElapsedGameTime.Ticks;
-            _samples[_currentSample++] = ticks;
-            _ticksAggregate += ticks;
-            if (_ticksAggregate > TimeSpan.TicksPerSecond)
-            {
-                _ticksAggregate -= (int)TimeSpan.TicksPerSecond;
-            }
-            if (_currentSample == NumberSamples)
-            {
-                _averageFrameTime = Sum(_samples) / NumberSamples;
-                _fps = TimeSpan.TicksPerSecond / _averageFrameTime;
-                _currentSample = 0;
-            }
+            // Call BeforeLayout first to set things up
+            _imGuiRenderer.BeforeLayout(gameTime);
 
-            GraphicsDevice.Clear(_clearColor);
+            // Draw our UI
+            ImGuiLayout();
 
-            _basicEffect.World = Matrix.Identity * Matrix.CreateScale(new Vector3(1, -1, 1));
-            _basicEffect.View = Matrix.CreateLookAt(Vector3.Backward * 200, Vector3.Zero, Vector3.Up);
-            _basicEffect.Projection = Matrix.CreateOrthographic(1280, 720, 0.1f, 1024f);
-            _basicEffect.VertexColorEnabled = true;
+            // Call AfterLayout now to finish up and draw all the things
+            _imGuiRenderer.AfterLayout();
 
-            GraphicsDevice.SetVertexBuffer(_vertexBuffer);
-            foreach (var pass in _basicEffect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, _vertices.Count / 3);
-            }
-
-            DrawUserInterface(gameTime);
             base.Draw(gameTime);
         }
 
-        private void DrawUserInterface(GameTime gameTime)
-        {
-            _imGuiRenderer.BeginLayout(gameTime);
-            if (ImGui.BeginMainMenuBar())
-            {
-                if (ImGui.BeginMenuBar())
-                {
-                    if (ImGui.BeginMenu("File"))
-                    {
-                        if (ImGui.MenuItem("Quit"))
-                        {
-                            Exit();
-                        }
+        // Direct port of the example at https://github.com/ocornut/imgui/blob/master/examples/sdl_opengl2_example/main.cpp
+        private float f = 0.0f;
 
-                        ImGui.EndMenu();
-                    }
-                    ImGui.EndMenuBar();
-                }
-                ImGui.EndMainMenuBar();
+        private bool show_test_window = false;
+        private bool show_another_window = false;
+        private Num.Vector3 clear_color = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
+        private byte[] _textBuffer = new byte[100];
+
+        protected virtual void ImGuiLayout()
+        {
+            // 1. Show a simple window
+            // Tip: if we don't call ImGui.Begin()/ImGui.End() the widgets appears in a window automatically called "Debug"
+            {
+                ImGui.Text("Hello, world!");
+                ImGui.SliderFloat("float", ref f, 0.0f, 1.0f, string.Empty);
+                ImGui.ColorEdit3("clear color", ref clear_color);
+                if (ImGui.Button("Test Window")) show_test_window = !show_test_window;
+                if (ImGui.Button("Another Window")) show_another_window = !show_another_window;
+                ImGui.Text(string.Format("Application average {0:F3} ms/frame ({1:F1} FPS)", 1000f / ImGui.GetIO().Framerate, ImGui.GetIO().Framerate));
+
+                ImGui.InputText("Text input", _textBuffer, 100);
+
+                ImGui.Text("Texture sample");
+                ImGui.Image(_imGuiTexture, new Num.Vector2(300, 150), Num.Vector2.Zero, Num.Vector2.One, Num.Vector4.One, Num.Vector4.One); // Here, the previously loaded texture is used
             }
-            ImGui.ShowDemoWindow();
-            _imGuiRenderer.EndLayout();
+
+            // 2. Show another simple window, this time using an explicit Begin/End pair
+            if (show_another_window)
+            {
+                ImGui.SetNextWindowSize(new Num.Vector2(200, 100), ImGuiCond.FirstUseEver);
+                ImGui.Begin("Another Window", ref show_another_window);
+                ImGui.Text("Hello");
+                ImGui.End();
+            }
+
+            // 3. Show the ImGui test window. Most of the sample code is in ImGui.ShowTestWindow()
+            if (show_test_window)
+            {
+                ImGui.SetNextWindowPos(new Num.Vector2(650, 20), ImGuiCond.FirstUseEver);
+                ImGui.ShowDemoWindow(ref show_test_window);
+            }
         }
 
-        protected override void LoadContent()
+        public static Texture2D CreateTexture(GraphicsDevice device, int width, int height, Func<int, Color> paint)
         {
-            base.LoadContent();
+            //initialize a texture
+            var texture = new Texture2D(device, width, height);
 
-            _basicEffect = new BasicEffect(GraphicsDevice);
-
-            _vertexBuffer?.Dispose();
-            _vertexBuffer = BuildVertexBuffer();
-        }
-
-        protected override void UnloadContent()
-        {
-            base.UnloadContent();
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            if (!_isWindowFocused)
+            //the array holds the color for each pixel in the texture
+            Color[] data = new Color[width * height];
+            for(var pixel = 0; pixel < data.Length; pixel++)
             {
-                return;
+                //the function applies the color according to the specified pixel
+                data[pixel] = paint( pixel );
             }
 
-            Window.Title = $"FPS: {_fps:F0}";
-            _imGuiRenderer.UpdateInput();
+            //set the color
+            texture.SetData( data );
 
-            var previousKeyboardState = _currentKeyboardState;
-            var previousMouseState = _currentMouseState;
-            _currentKeyboardState = Keyboard.GetState();
-            _currentMouseState = Mouse.GetState();
-
-            if (_currentKeyboardState.IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
-
-            base.Update(gameTime);
-        }
-
-        private VertexBuffer BuildVertexBuffer()
-        {
-            const int TileSize = 44;
-            const int TileSizeHalf = TileSize / 2;
-
-            void DrawSquare(Color color, int x, int y, float tileZ)
-            {
-                var p0 = new Vector3(x + TileSizeHalf, y - tileZ * 4, 0);
-                var p1 = new Vector3(x + TileSize, y + TileSizeHalf - tileZ * 4, 0);
-                var p2 = new Vector3(x, y + TileSizeHalf - tileZ * 4, 0);
-                var p3 = new Vector3(x + TileSizeHalf, y + TileSize - tileZ * 4, 0);
-
-                _vertices.Add(new VertexPositionColor(p0, color));
-                _vertices.Add(new VertexPositionColor(p1, color));
-                _vertices.Add(new VertexPositionColor(p2, color));
-
-                _vertices.Add(new VertexPositionColor(p1, color));
-                _vertices.Add(new VertexPositionColor(p3, color));
-                _vertices.Add(new VertexPositionColor(p2, color));
-            }
-
-            var maxX = 12;
-            var maxY = 12;
-            var random = new Random();
-            var colors = new[]
-            {
-                Color.Green,
-                Color.GreenYellow,
-                Color.DarkGreen,
-                Color.ForestGreen,
-                Color.LawnGreen,
-                Color.LightGreen,
-                Color.LimeGreen,
-                Color.SeaGreen,
-                Color.SpringGreen,
-                Color.YellowGreen,
-                Color.DarkOliveGreen,
-                Color.LightSeaGreen,
-                Color.MediumSeaGreen
-            };
-
-            for (var x = -4; x < maxX; ++x)
-            {
-                for (var y = -4; y < maxY; ++y)
-                {
-                    if (x == -4 && y == -4 || x == maxX - 1 && y == -4 || x == maxX - 1 && y == maxY - 1 || x == -4 && y == maxY - 1)
-                    {
-                        continue;
-                    }
-                    DrawSquare(colors[random.Next(0, colors.Length)], (x - y) * TileSizeHalf, (x + y) * TileSizeHalf - 200, 0);
-                }
-            }
-
-            var vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), _vertices.Count, BufferUsage.WriteOnly);
-            vertexBuffer.SetData(_vertices.ToArray());
-            return vertexBuffer;
-        }
-
-        private static float Sum(int[] samples)
-        {
-            var result = 0f;
-            for (int i = 0; i < samples.Length; i++)
-            {
-                result += samples[i];
-            }
-            return result;
+            return texture;
         }
     }
 }
