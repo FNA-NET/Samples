@@ -20,7 +20,7 @@
       this property should not be disabled if custom PRI resources are needed by the application.      
     -->
     <EnableXamlCompilerTargetsForUwpApps>false</EnableXamlCompilerTargetsForUwpApps>
-    <MonoGamePlatform>WindowsStoreApp</MonoGamePlatform>
+    <MonoGamePlatform>DesktopGL</MonoGamePlatform>
   </PropertyGroup>
 
   <ItemGroup>
