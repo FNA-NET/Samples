@@ -21,6 +21,10 @@
     -->
     <EnableXamlCompilerTargetsForUwpApps>false</EnableXamlCompilerTargetsForUwpApps>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
+    <!--
+      This is required to fix mouse issue, which happens when hardware mouse is disabled(Game.IsMouseVisible = false)
+    -->
+    <Win32Resource>SDL2-WinRTResources.res</Win32Resource>
   </PropertyGroup>
 
   <ItemGroup>
