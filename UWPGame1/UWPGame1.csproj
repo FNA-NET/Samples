@@ -27,6 +27,10 @@
     <Win32Resource>SDL2-WinRTResources.res</Win32Resource>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
+    <AvailableItemName Include="AppxManifest" />
+  </ItemGroup>
+
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
