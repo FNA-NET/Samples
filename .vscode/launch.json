@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "buildFNAGame1",
             // 如果已更改目标框架，请确保更新程序路径。
-            "program": "${workspaceFolder}/FNAGame1/bin/Debug/net8.0/FNAGame1.dll",
+            "program": "${workspaceFolder}/FNAGame1/bin/Debug/net9.0/FNAGame1.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/FNAGame1/bin/Debug/net8.0",
+            "cwd": "${workspaceFolder}/FNAGame1/bin/Debug/net9.0",
             // 有关“控制台”字段的详细信息，请参阅 https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
@@ -26,9 +26,9 @@
             "request": "launch",
             "preLaunchTask": "buildFNAWinGame1",
             // 如果已更改目标框架，请确保更新程序路径。
-            "program": "${workspaceFolder}/FNAWinGame1/bin/Debug/net8.0-windows/FNAWinGame1.dll",
+            "program": "${workspaceFolder}/FNAWinGame1/bin/Debug/net9.0-windows/FNAWinGame1.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/FNAWinGame1/bin/Debug/net8.0-windows",
+            "cwd": "${workspaceFolder}/FNAWinGame1/bin/Debug/net9.0-windows",
             // 有关“控制台”字段的详细信息，请参阅 https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
@@ -42,9 +42,9 @@
             "request": "launch",
             "preLaunchTask": "buildFNAImGuiDemo",
             // 如果已更改目标框架，请确保更新程序路径。
-            "program": "${workspaceFolder}/FNAImGuiDemo/bin/Debug/net8.0/FNAImGuiDemo.dll",
+            "program": "${workspaceFolder}/FNAImGuiDemo/bin/Debug/net9.0/FNAImGuiDemo.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/FNAImGuiDemo/bin/Debug/net8.0",
+            "cwd": "${workspaceFolder}/FNAImGuiDemo/bin/Debug/net9.0",
             // 有关“控制台”字段的详细信息，请参阅 https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

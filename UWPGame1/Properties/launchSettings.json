@@ -1,7 +1,8 @@
 {
   "profiles": {
     "UWPGame1": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
     }
   }
 }

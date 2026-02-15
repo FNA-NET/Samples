@@ -10,6 +10,8 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:../../FNAGame1/Content/FNA.NET.ContentPipeline.dll
+
 #---------------------------------- Content ---------------------------------#
 
 #begin Image1.png
@@ -30,5 +32,9 @@
 /processorParam:Quality=Best
 /build:Sound/120.wav
 
-#begin Effects/Grayscale.fxb
-/copy:Effects/Grayscale.fxb
+# begin Effects/Grayscale.fx
+/importer:EffectImporter
+/processor:FxcEffectProcessor
+/processorParam:DebugMode = Auto
+/processorParam:Defines=
+/build:Effects/Grayscale.fx

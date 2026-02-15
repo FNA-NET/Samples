@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-tvos</TargetFramework>
+    <TargetFramework>net9.0-tvos</TargetFramework>
     <OutputType>Exe</OutputType>
     <ImplicitUsings>true</ImplicitUsings>
     <SupportedOSPlatformVersion>13</SupportedOSPlatformVersion>
