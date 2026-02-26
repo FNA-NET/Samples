@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace UWPGame1
@@ -30,7 +31,52 @@ namespace UWPGame1
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            InputEventEXT.KeyDown += (e) =>
+            {
+                if (e.Key == Keys.F1)
+                {
+                    _sound.Play();
+
+                    if (TextInputEXT.IsTextInputActive())
+                        TextInputEXT.StopTextInput();
+                    else
+                        TextInputEXT.StartTextInput();
+                }
+
+                if (e.Key == Keys.F2)
+                {
+                    SDL3.SDL.SDL_ClearComposition(TextInputEXT.WindowHandle);
+                }
+            };
+
+            TextInputEXT.ImeTextInput += (character) =>
+            {
+                Debug.WriteLine($"[Text Input] {character}");
+            };
+
+            TextInputEXT.TextEditing += (compStr, cursorPosition, length) =>
+            {
+                if (string.IsNullOrEmpty(compStr)) return;
+
+                compStr = compStr.Insert(cursorPosition, "|");
+
+                Debug.WriteLine("--------[Text Composition]--------");
+                Debug.WriteLine($"CompString {compStr}");
+                Debug.WriteLine($"CompCursor {cursorPosition}");
+                Debug.WriteLine("==================================");
+            };
+
+            TextInputEXT.TextEditingCandidates += (candidates, selected, horizontal) =>
+            {
+                for (int i = 0; i < candidates.Length; i++)
+                {
+                    if (i == selected)
+                        Debug.WriteLine($"*{i+1}.Candidates: {candidates[i]}");
+                    else
+                        Debug.WriteLine($"{i+1}.Candidates: {candidates[i]}");
+                }
+                Debug.WriteLine($"Candidate Size: {candidates.Length}, selection: {selected}, horizontal: {horizontal}");
+            };
 
             base.Initialize();
         }
@@ -46,15 +92,6 @@ namespace UWPGame1
 
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState keyboardCur = Keyboard.GetState();
-
-            if (keyboardCur.IsKeyDown(Keys.Space) && _keyboardPrev.IsKeyUp(Keys.Space))
-            {
-                _sound.Play();
-            }
-
-            _keyboardPrev = keyboardCur;
-
             base.Update(gameTime);
         }
 

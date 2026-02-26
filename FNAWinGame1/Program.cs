@@ -7,7 +7,7 @@ public static class Program
     [STAThread]
     static void Main()
     {
-        TextInputEXT.ShowOSImeWindow = false;
+        SDL3.SDL.SDL_SetHint("SDL_IME_IMPLEMENTED_UI", "composition,candidates");
         using (var g = new Game1()) {
             g.Run();
         }

@@ -42,7 +42,7 @@ public class Game1 : Game
 			}
 		};
 
-		TextInputEXT.TextInput += (character) =>
+		TextInputEXT.ImeTextInput += (character) =>
 		{
 			Console.WriteLine($"[Text Input] {character}");
 		};
@@ -56,16 +56,19 @@ public class Game1 : Game
 			Console.WriteLine("--------[Text Composition]--------");
 			Console.WriteLine($"CompString {compStr}");
 			Console.WriteLine($"CompCursor {cursorPosition}");
-			for (int i = 0; i < TextInputEXT.CandidatePageSize; i++)
-			{
-				if (i == TextInputEXT.CandidateSelection)
-					Console.WriteLine($"*{i+1}.Candidates: {TextInputEXT.CandidateList[i]}");
-				else
-					Console.WriteLine($"{i+1}.Candidates: {TextInputEXT.CandidateList[i]}");
-			}
-			Console.WriteLine($"Candidate Size: {TextInputEXT.CandidateList.Length}");
-			Console.WriteLine($"Candidate Selection: {TextInputEXT.CandidateSelection}");
 			Console.WriteLine("==================================");
+		};
+
+		TextInputEXT.TextEditingCandidates += (candidates, selected, horizontal) =>
+		{
+			for (int i = 0; i < candidates.Length; i++)
+			{
+				if (i == selected)
+					Console.WriteLine($"*{i+1}.Candidates: {candidates[i]}");
+				else
+					Console.WriteLine($"{i+1}.Candidates: {candidates[i]}");
+			}
+			Console.WriteLine($"Candidate Size: {candidates.Length}, selection: {selected}, horizontal: {horizontal}");
 		};
 	}
 

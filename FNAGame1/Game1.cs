@@ -41,7 +41,7 @@ public class Game1 : Game
 			}
 		};
 
-		TextInputEXT.TextInput += (character) =>
+		TextInputEXT.ImeTextInput += (character) =>
 		{
 			Console.WriteLine($"[Text Input] {character}");
 		};
