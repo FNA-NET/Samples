@@ -10,6 +10,19 @@ namespace UWPGame1
 {
     public class Game1 : Game
     {
+        static int _coreWindowWidth;
+        static int _coreWindowHeight;
+
+        static Game1()
+        {
+            var scale = Windows.Graphics.Display.DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+            var window = Windows.UI.Core.CoreWindow.GetForCurrentThread();
+            _coreWindowWidth = (int)(0.5f + scale * window.Bounds.Width);
+            _coreWindowHeight = (int)(0.5f + scale * window.Bounds.Height);
+
+            GraphicsDeviceManager.DefaultBackBufferWidth = _coreWindowWidth;
+            GraphicsDeviceManager.DefaultBackBufferHeight = _coreWindowHeight;
+        }
         private SpriteBatch _batch;
         private Texture2D _texture1;
         private SoundEffect _sound;
@@ -19,9 +32,10 @@ namespace UWPGame1
         public Game1()
         {
             GraphicsDeviceManager gdm = new GraphicsDeviceManager(this);
+            var b = Window.ClientBounds;
 
-            gdm.PreferredBackBufferWidth = 1024;
-            gdm.PreferredBackBufferHeight = 768;
+            gdm.PreferredBackBufferWidth = _coreWindowWidth;
+            gdm.PreferredBackBufferHeight = _coreWindowHeight;
             gdm.IsFullScreen = false;
             gdm.SynchronizeWithVerticalRetrace = true;
 
